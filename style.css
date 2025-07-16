@@ -1,0 +1,1320 @@
+:root {
+    --primary-color: #0D5C63;
+    --secondary-color: #E5F8F8;
+    --accent-color: #70AEBA;
+    --text-color: #333;
+    --light-text: #444;
+    --white: #fff;
+    --light-bg: #f5fcfc;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --mining-bg: #112e30;
+    --mining-text: #ecf0f1;
+    --mining-success: #2ecc71;
+    --mining-failure: #e74c3c;
+    --contract-bg: #0c3c42;
+    --contract-text: #ecf0f1;
+    --contract-success: #2ecc71;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    position: fixed;
+}
+
+body {
+    background-color: #f0f8f8;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.screen {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    display: none;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.app-title {
+    color: var(--primary-color);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.subtitle {
+    color: var(--primary-color);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.balance-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.token-balance {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.token-label {
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.station-selector {
+    border: none;
+    background-color: var(--white);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+}
+
+.button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    background-color: #0a4a50;
+}
+
+.button-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.button-outline:hover {
+    background-color: var(--secondary-color);
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Gaya untuk tombol aksen (Tambah Token) */
+.button-accent {
+    background-color: var(--accent-color);
+}
+
+.button-accent:hover {
+    background-color: #5d9ba7;
+}
+
+.button i {
+    margin-right: 8px;
+}
+
+/* Tata letak tombol aksi di beranda */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.token-input {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.token-input input {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.token-input input:focus {
+    outline: none;
+}
+
+.token-input-label {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 16px;
+    font-weight: 600;
+}
+
+.transaction-list {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.transaction-item {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-date {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.transaction-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transaction-station {
+    font-weight: 600;
+}
+
+.transaction-amount {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.transaction-blockchain-info {
+    font-size: 12px;
+    color: var(--light-text);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.map-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 180px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #e7f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.station-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-color);
+    font-size: 32px;
+}
+
+.back-button {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.success-icon {
+    font-size: 64px;
+    color: #28a745;
+    margin: 24px auto;
+}
+
+.success-message {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 24px;
+}
+
+.tab-bar {
+    display: flex;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-top: auto;
+    box-shadow: var(--shadow);
+    position: sticky;
+    bottom: 0;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 4px;
+    cursor: pointer;
+    color: var(--light-text);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tab i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.tab.active {
+    color: var(--primary-color);
+}
+
+.fingerprint-icon {
+    font-size: 64px;
+    color: var(--accent-color);
+    margin: 24px auto;
+    opacity: 0.7;
+}
+
+.login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: auto;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+.station-display {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.transaction-details-success {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    line-height: 1.6;
+}
+
+.transaction-details-success p {
+    margin-bottom: 8px;
+}
+
+.transaction-details-success span {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.login-form, .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.form-input {
+    background-color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 16px;
+    font-size: 16px;
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+    width: 100%;
+}
+
+.form-input:focus {
+    outline: none;
+    box-shadow: 0 4px 12px rgba(13, 92, 99, 0.2);
+}
+
+.profile-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-avatar {
+    font-size: 48px;
+    color: var(--accent-color);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.profile-email {
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.profile-stats {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+}
+
+.stat-item {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 500;
+    color: var(--light-text);
+}
+
+.stat-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Mining Visualization Styles */
+.mining-visual, .contract-visual {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    background-color: var(--mining-bg);
+    color: var(--mining-text);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+}
+
+.mining-header, .contract-header {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mining-header h3, .contract-header h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.close-visual-btn {
+    background: none;
+    border: none;
+    color: var(--mining-text);
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.close-visual-btn:hover {
+    opacity: 1;
+}
+
+.mining-content, .contract-content {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.mining-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.mining-data {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.data-header {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.data-content {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.hash-process {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 200px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.hash-attempt {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.nonce {
+    color: #3498db;
+}
+
+.hash-result {
+    word-break: break-all;
+}
+
+.valid-hash {
+    color: var(--mining-success);
+    font-weight: bold;
+}
+
+.mining-success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--mining-success);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    font-weight: bold;
+}
+
+.mining-skipped {
+    text-align: center;
+    padding: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Smart Contract Execution Styles */
+.contract-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.contract-step {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.step-name {
+    flex: 1;
+}
+
+.step-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.step-status.pending {
+    background-color: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+}
+
+.step-status.success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--contract-success);
+}
+
+.step-status.error {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+.contract-result {
+    background-color: rgba(46, 204, 113, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.result-success {
+    color: var(--contract-success);
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.result-details {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.blockchain-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.stat-title {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-bottom: 8px;
+}
+
+.blockchain-info-panel {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.blockchain-info-panel h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+}
+
+.blockchain-info-panel p {
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.contract-info {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.contract-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.contract-address {
+    font-family: monospace;
+    word-break: break-all;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.station-blockchain-info {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.blockchain-info {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--light-text);
+    box-shadow: var(--shadow);
+    line-height: 1.5;
+}
+
+.wallet-display {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.wallet-label {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.wallet-address {
+    font-family: monospace;
+    word-break: break-all;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.payment-note {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--light-text);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.payment-note i {
+    color: var(--primary-color);
+    font-size: 20px;
+}
+
+/* Token Purchase Styles */
+.purchase-options {
+    margin-bottom: 16px;
+}
+
+.purchase-option-title, .payment-method-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.purchase-option-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.purchase-option {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.purchase-option:hover {
+    transform: translateY(-2px);
+}
+
+.purchase-option.active {
+    border-color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.purchase-amount {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.purchase-price {
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+.custom-purchase {
+    margin-bottom: 16px;
+}
+
+.custom-price {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 12px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 8px;
+    box-shadow: var(--shadow);
+}
+
+.payment-method-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.payment-method-option {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.payment-method-option i {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.payment-method-option.active {
+    border-color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+/* Charging Station Map with Live Availability */
+
+.full-map {
+    height: 220px;
+    margin-bottom: 16px;
+}
+
+.station-list {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.station-list-header {
+    padding: 12px 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.station-list-container {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.station-list-item {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.station-list-item:last-child {
+    border-bottom: none;
+}
+
+.station-list-item.active {
+    background-color: var(--secondary-color);
+}
+
+.station-list-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.station-list-distance {
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+.station-list-status {
+    text-align: right;
+}
+
+.station-list-available {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.station-list-rate {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.station-point {
+    cursor: pointer;
+    transition: r 0.2s ease;
+}
+
+.station-point:hover {
+    r: 10;
+}
+
+.station-point.active {
+    fill: var(--accent-color);
+}
+
+.user-location {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        r: 8;
+        opacity: 1;
+    }
+    50% {
+        r: 10;
+        opacity: 0.7;
+    }
+    100% {
+        r: 8;
+        opacity: 1;
+    }
+}
+
+/* Battery Health Monitoring and Analytics Dashboard */
+
+.battery-status {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.battery-icon {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-right: 16px;
+    position: relative;
+    width: 60px;
+    text-align: center;
+}
+
+.battery-percentage {
+    font-size: 14px;
+    font-weight: 600;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.battery-info {
+    flex: 1;
+}
+
+.battery-health, .battery-range, .battery-efficiency {
+    margin-bottom: 4px;
+}
+
+.health-good {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.health-average {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.health-poor {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.analytics-cards {
+    margin-bottom: 16px;
+}
+
+.analytics-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.analytics-title {
+    background-color: var(--secondary-color);
+    padding: 12px 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.analytics-title i {
+    margin-right: 8px;
+}
+
+.analytics-content {
+    padding: 16px;
+}
+
+.chart-container {
+    height: 160px;
+    margin-bottom: 16px;
+}
+
+.chart-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+}
+
+.chart-summary {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-item {
+    text-align: center;
+}
+
+.summary-label {
+    font-size: 12px;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.degradation-prediction {
+    margin-top: 16px;
+}
+
+.prediction-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.prediction-values {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prediction-item {
+    text-align: center;
+}
+
+.prediction-year {
+    font-size: 12px;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.prediction-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.charging-recommendations {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.recommendation-title {
+    background-color: var(--secondary-color);
+    padding: 12px 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.recommendation-list {
+    padding: 16px;
+}
+
+.recommendation-item {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.recommendation-item:last-child {
+    margin-bottom: 0;
+}
+
+.recommendation-item i {
+    font-size: 20px;
+    color: var(--accent-color);
+    margin-right: 12px;
+    margin-top: 2px;
+}
+
+.recommendation-header {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.recommendation-description {
+    font-size: 14px;
+    color: var(--light-text);
+    line-height: 1.4;
+}
+
+/* Blockchain Status Display */
+.blockchain-status {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+}
+
+.status-item i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Success Buttons Container */
+.success-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.success-buttons .button {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Meta tag untuk mobile viewport */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+    
+    .container {
+        padding: 0;
+        height: 100%;
+    }
+    
+    .screen {
+        border-radius: 0;
+        min-height: 100%;
+    }
+    
+    .tab-bar {
+        border-radius: 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+    }
+    
+    .mining-visual, .contract-visual {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Untuk perangkat iOS yang memiliki notch */
+@supports (padding: max(0px)) {
+    body {
+        padding-top: max(0px, env(safe-area-inset-top));
+        padding-bottom: max(0px, env(safe-area-inset-bottom));
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+    
+    .tab-bar {
+        padding-bottom: max(0px, env(safe-area-inset-bottom));
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.station-marker.pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* For small screens */
+@media screen and (max-width: 400px) {
+    .purchase-option-container, .payment-method-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

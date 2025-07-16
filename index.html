@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>VoltChain - Simulasi Pembayaran Stasiun Pengisian Mobil Listrik</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div class="screen login-screen active">
+            <h1 class="app-title">VoltChain</h1>
+            <div class="fingerprint-icon">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <div class="login-form">
+                <input type="email" id="login-email" placeholder="Email" class="form-input">
+                <input type="password" id="login-password" placeholder="Password" class="form-input">
+            </div>
+            <div class="login-options">
+                <button class="button" id="login-button">Masuk</button>
+                <button class="button button-outline" id="show-signup-button">Daftar</button>
+            </div>
+        </div>
+
+        <!-- Sign Up Screen -->
+        <div class="screen signup-screen">
+            <h1 class="app-title">VoltChain</h1>
+            <h2 class="subtitle">Buat Akun</h2>
+            <div class="signup-form">
+                <input type="text" id="signup-name" placeholder="Nama Lengkap" class="form-input">
+                <input type="email" id="signup-email" placeholder="Email" class="form-input">
+                <input type="password" id="signup-password" placeholder="Password" class="form-input">
+                <input type="password" id="signup-confirm-password" placeholder="Konfirmasi Password" class="form-input">
+            </div>
+            <div class="login-options">
+                <button class="button" id="signup-button">Buat Akun</button>
+                <button class="button button-outline" id="back-to-login-button">Kembali ke Masuk</button>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div class="screen home-screen">
+            <h2 class="subtitle">VoltChain</h2>
+            <div class="balance-card">
+                <div class="token-balance">150 TKN</div>
+                <div class="token-label">Token</div>
+                <div class="wallet-address" id="home-wallet-address"></div>
+            </div>
+            <div class="blockchain-status">
+                <div class="status-item">
+                    <i class="fas fa-cube"></i>
+                    <span id="current-block">2177</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-network-wired"></i>
+                    <span id="network-hashrate">125 TH/s</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="button" id="charge-now-button">Isi Daya Sekarang</button>
+
+            </div>
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <div class="transaction-date">18 Apr 2024</div>
+                    <div class="transaction-details">
+                        <span class="transaction-station">Central Plaza</span>
+                        <span class="transaction-amount">25 TKN</span>
+                    </div>
+                    <div class="transaction-blockchain-info">
+                        <span class="block-height">Block: 2145</span>
+                        <span class="confirmations">Konfirmasi: 32</span>
+                    </div>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-date">16 Apr 2024</div>
+                    <div class="transaction-details">
+                        <span class="transaction-station">GreenCharge East</span>
+                        <span class="transaction-amount">20 TKN</span>
+                    </div>
+                    <div class="transaction-blockchain-info">
+                        <span class="block-height">Block: 2138</span>
+                        <span class="confirmations">Konfirmasi: 40</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-bar">
+                <div class="tab active" data-screen="home-screen">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </div>
+                <div class="tab" data-screen="history-screen">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat</span>
+                </div>
+                <div class="tab" data-screen="blockchain-screen">
+                    <i class="fas fa-cubes"></i>
+                    <span>Blockchain</span>
+                </div>
+                <div class="tab" data-screen="profile-screen">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station Selection Screen -->
+        <div class="screen station-screen">
+            <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+            <h2 class="subtitle">VoltChain</h2>
+            <div class="token-balance">150 TKN</div>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="station-marker">
+                        <i class="fas fa-charging-station"></i>
+                    </div>
+                </div>
+            </div>
+            <button class="button" id="locate-station-button">Temukan Stasiun EV</button>
+            <select class="station-selector" id="station-selector">
+                <option value="" disabled selected>Pilih stasiun pengisian</option>
+                <option value="Central Plaza">Central Plaza</option>
+                <option value="GreenCharge East">GreenCharge East</option>
+                <option value="Electro Avenue">Electro Avenue</option>
+                <option value="Power Hub">Power Hub</option>
+            </select>
+            <div id="station-blockchain-info" class="station-blockchain-info" style="display: none;"></div>
+            <button class="button" id="select-station-button" disabled>Lanjutkan ke Pembayaran</button>
+        </div>
+
+        <!-- Payment Screen -->
+        <div class="screen payment-screen">
+            <button class="back-button payment-back-button"><i class="fas fa-arrow-left"></i></button>
+            <h2 class="subtitle">Pembayaran</h2>
+            <div class="balance-card">
+                <div class="token-balance">150 TKN</div>
+                <div class="token-label">Saldo Tersedia</div>
+            </div>
+            <div class="station-display" id="selected-station-display">
+                Central Plaza
+            </div>
+            <div class="token-input">
+                <input type="number" id="token-amount" placeholder="Jumlah" min="1" max="150">
+                <div class="token-input-label">TKN</div>
+            </div>
+            <div class="token-input">
+                <input type="number" id="kwh-estimate" placeholder="Estimasi kWh" readonly>
+                <div class="token-input-label">kWh</div>
+            </div>
+            <div class="blockchain-info">
+                <div id="gas-estimate">Estimasi Gas: 21000 | Harga Gas: 5 gwei</div>
+                <div>Jaringan: VoltChain Testnet</div>
+            </div>
+            <button class="button" id="pay-button" disabled>Bayar Sekarang</button>
+            <div class="payment-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Pembayaran akan diproses melalui kontrak pintar dan ditambahkan ke blockchain</span>
+            </div>
+        </div>
+
+        <!-- Transaction Success Screen -->
+        <div class="screen transaction-success-screen">
+            <h2 class="subtitle">Transaksi Berhasil</h2>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <p class="success-message">Pembayaran Anda sebesar <span id="success-amount">0</span> TKN telah berhasil diproses!</p>
+            <div class="transaction-details-success">
+                <p>Stasiun: <span id="success-station">-</span></p>
+                <p>Tanggal: <span id="success-date">-</span></p>
+                <p>Estimasi Energi: <span id="success-kwh">0</span> kWh</p>
+                <p>Saldo Baru: <span id="success-balance">0</span> TKN</p>
+                <p>Hash Transaksi: <span id="success-tx-id">0x0000</span></p>
+                <p>Nomor Blok: <span id="success-block">0</span></p>
+                <p>Nilai Nonce: <span id="success-nonce">0</span></p>
+            </div>
+            <div class="success-buttons">
+                <button class="button" id="back-to-home-button">Kembali ke Beranda</button>
+            </div>
+        </div>
+
+        <!-- History Screen -->
+        <div class="screen history-screen">
+            <h2 class="subtitle">Transaksi</h2>
+            <div class="transaction-list" id="transaction-history">
+                <!-- Transaction history will be populated here -->
+            </div>
+            <div class="tab-bar">
+                <div class="tab" data-screen="home-screen">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </div>
+                <div class="tab active" data-screen="history-screen">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat</span>
+                </div>
+                <div class="tab" data-screen="blockchain-screen">
+                    <i class="fas fa-cubes"></i>
+                    <span>Blockchain</span>
+                </div>
+                <div class="tab" data-screen="profile-screen">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blockchain Screen -->
+        <div class="screen blockchain-screen">
+            <h2 class="subtitle">Status Blockchain</h2>
+            <div class="blockchain-stats">
+                <div class="stat-card">
+                    <div class="stat-title">Blok Saat Ini</div>
+                    <div class="stat-value" id="blockchain-current-block">2177</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Hashrate Jaringan</div>
+                    <div class="stat-value" id="blockchain-hashrate">125 TH/s</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Tingkat Kesulitan</div>
+                    <div class="stat-value" id="blockchain-difficulty">2</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Blok Terakhir</div>
+                    <div class="stat-value" id="blockchain-last-block">30 detik lalu</div>
+                </div>
+            </div>
+            <button class="button" id="refresh-blockchain">Perbarui Data Blockchain</button>
+            <div class="blockchain-info-panel">
+                <h3>Jaringan VoltChain</h3>
+                <p>VoltChain menggunakan algoritma konsensus Proof of Work (PoW) dengan SHA-256 untuk mengamankan transaksi.</p>
+                <p>Semua pembayaran pengisian EV diproses melalui kontrak pintar yang di-deploy pada jaringan.</p>
+                <div class="contract-info">
+                    <div class="contract-label">Kontrak Utama:</div>
+                    <div class="contract-address">0x3f81a5d62e7c4b01928a47b7c88d5a25d9d89e6f</div>
+                </div>
+            </div>
+            <div class="tab-bar">
+                <div class="tab" data-screen="home-screen">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </div>
+                <div class="tab" data-screen="history-screen">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat</span>
+                </div>
+                <div class="tab active" data-screen="blockchain-screen">
+                    <i class="fas fa-cubes"></i>
+                    <span>Blockchain</span>
+                </div>
+                <div class="tab" data-screen="profile-screen">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div class="screen profile-screen">
+            <h2 class="subtitle">Profil</h2>
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profile-name">-</div>
+                    <div class="profile-email" id="profile-email">-</div>
+                </div>
+            </div>
+            <div class="wallet-display">
+                <div class="wallet-label">Alamat Dompet</div>
+                <div class="wallet-address" id="wallet-address">-</div>
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Saldo Token</div>
+                    <div class="token-balance">150 TKN</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total Transaksi</div>
+                    <div class="stat-value" id="total-transactions">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Anggota Sejak</div>
+                    <div class="stat-value" id="member-since">-</div>
+                </div>
+            </div>
+            <button class="button button-outline" id="logout-button">Keluar</button>
+            <div class="tab-bar">
+                <div class="tab" data-screen="home-screen">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </div>
+                <div class="tab" data-screen="history-screen">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat</span>
+                </div>
+                <div class="tab" data-screen="blockchain-screen">
+                    <i class="fas fa-cubes"></i>
+                    <span>Blockchain</span>
+                </div>
+                <div class="tab active" data-screen="profile-screen">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mining Process Visualization -->
+        <div class="mining-visual" id="mining-visual" style="display: none;">
+            <div class="mining-header">
+                <h3>Proses Penambangan Blok</h3>
+                <button class="close-visual-btn" id="close-mining-visual">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mining-content">
+                <!-- Mining visualization content will be inserted here -->
+            </div>
+        </div>
+        
+        <!-- Smart Contract Execution Visualization -->
+        <div class="contract-visual" id="contract-visual" style="display: none;">
+            <div class="contract-header">
+                <h3>Eksekusi Kontrak Pintar</h3>
+                <button class="close-visual-btn" id="close-contract-visual">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="contract-content">
+                <!-- Contract execution visualization will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Add Token Purchase Screen -->
+        <div class="screen token-purchase-screen">
+            <button class="back-button token-purchase-back-button"><i class="fas fa-arrow-left"></i></button>
+            <h2 class="subtitle">Tambah Token</h2>
+            <div class="balance-card">
+                <div class="token-balance">150 TKN</div>
+                <div class="token-label">Saldo Saat Ini</div>
+            </div>
+            <div class="purchase-options">
+                <div class="purchase-option-title">Jumlah Pembelian</div>
+                <div class="purchase-option-container">
+                    <div class="purchase-option" data-amount="10">
+                        <div class="purchase-amount">10 TKN</div>
+                        <div class="purchase-price">$5</div>
+                    </div>
+                    <div class="purchase-option" data-amount="50">
+                        <div class="purchase-amount">50 TKN</div>
+                        <div class="purchase-price">$20</div>
+                    </div>
+                    <div class="purchase-option" data-amount="100">
+                        <div class="purchase-amount">100 TKN</div>
+                        <div class="purchase-price">$35</div>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-purchase">
+                <div class="token-input">
+                    <input type="number" id="custom-token-amount" placeholder="Jumlah Kustom" min="1" max="1000">
+                    <div class="token-input-label">TKN</div>
+                </div>
+                <div class="custom-price" id="custom-price">Rp0</div>
+            </div>
+            <div class="payment-method">
+                <div class="payment-method-title">Metode Pembayaran</div>
+                <div class="payment-method-options">
+                    <div class="payment-method-option active" data-method="credit">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Kartu Kredit</span>
+                    </div>
+                    <div class="payment-method-option" data-method="bank">
+                        <i class="fas fa-university"></i>
+                        <span>Transfer Bank</span>
+                    </div>
+                    <div class="payment-method-option" data-method="crypto">
+                        <i class="fas fa-coins"></i>
+                        <span>Kripto</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blockchain-info">
+                <div>Jaringan: VoltChain Testnet</div>
+                <div>Kontrak: TokenSale (0x4d81a9...)</div>
+            </div>
+            <button class="button" id="purchase-token-button">Beli Token</button>
+            <div class="payment-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Pembelian token akan diproses melalui kontrak pintar dan ditambahkan ke blockchain</span>
+            </div>
+        </div>
+
+        <!-- Token Transaction Success Screen -->
+        <div class="screen token-transaction-success-screen">
+            <h2 class="subtitle">Pembelian Berhasil</h2>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <p class="success-message">Pembelian Anda sebesar <span id="token-success-amount">0</span> TKN telah berhasil diproses!</p>
+            <div class="transaction-details-success">
+                <p>Tanggal: <span id="token-success-date">-</span></p>
+                <p>Metode Pembayaran: <span id="token-success-method">-</span></p>
+                <p>Saldo Baru: <span id="token-success-balance">0</span> TKN</p>
+                <p>Hash Transaksi: <span id="token-success-tx-id">0x0000</span></p>
+                <p>Nomor Blok: <span id="token-success-block">0</span></p>
+            </div>
+            <div class="success-buttons">
+                <button class="button" id="token-back-to-home-button">Kembali ke Beranda</button>
+            </div>
+        </div>
+
+    <div class="notification" id="notification">Transaksi diproses</div>
+    <div class="loading" id="loading" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div id="loading-message">Memproses...</div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="crypto.js"></script>
+    <script src="blockchain.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

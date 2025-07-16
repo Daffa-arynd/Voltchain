@@ -1,0 +1,73 @@
+{
+    "user": {
+      "id": "user123",
+      "name": "Enplum",
+      "balance": 150,
+      "transactions": [
+        { 
+          "id": "tx001", 
+          "date": "2024-04-18", 
+          "station": "Central Plaza", 
+          "amount": 25, 
+          "kwh": 15,
+          "txHash": "0x7a23b9c74d89e6f1a32..."
+        },
+        { 
+          "id": "tx002", 
+          "date": "2024-04-16", 
+          "station": "GreenCharge East", 
+          "amount": 20, 
+          "kwh": 10,
+          "txHash": "0x3f81a5d62e7c4b01928..."
+        }
+      ]
+    },
+    "stations": {
+      "Central Plaza": { 
+        "conversionRate": 0.6, 
+        "location": "Downtown",
+        "coordinates": {
+          "lat": -6.2088,
+          "lng": 106.8456
+        }
+      },
+      "GreenCharge East": { 
+        "conversionRate": 0.5, 
+        "location": "East District",
+        "coordinates": {
+          "lat": -6.2233,
+          "lng": 106.8578
+        } 
+      },
+      "Electro Avenue": { 
+        "conversionRate": 0.55, 
+        "location": "North Side",
+        "coordinates": {
+          "lat": -6.1900,
+          "lng": 106.8400
+        } 
+      },
+      "Power Hub": { 
+        "conversionRate": 0.65, 
+        "location": "West End",
+        "coordinates": {
+          "lat": -6.2100,
+          "lng": 106.8300
+        }
+      }
+    },
+    "tokenInfo": {
+      "name": "VoltChain Token",
+      "symbol": "TKN",
+      "decimals": 0,
+      "totalSupply": 1000000,
+      "contractAddress": "0x3f81a5d62e7c4b01928a47b7c88d5a25d9d89e6f"
+    },
+    "appSettings": {
+      "minTransactionAmount": 1,
+      "maxTransactionAmount": 500,
+      "transactionFee": 0,
+      "processingTime": 1500,
+      "refreshRate": 60000
+    }
+  }
